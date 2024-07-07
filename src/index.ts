@@ -1,18 +1,13 @@
+import swagger from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
+import controllers from './controllers';
 
-const app = new Elysia()
-  .state('name', 'Elysia')
-  .get('/', () => `Hello, world!`)
-  .decorate('logger', (value: unknown) => {
-    console.log(value);
-  })
-  .get('/hi', () => 'Hi Agus!')
-  .get('/hi/:name', ({ params: { name = 'Anonymous' } }) => `Hi, ${name}!`)
-  .onError(({ code }) => {
-    if (code === 'NOT_FOUND') {
-      return 'Whoops! Not found!';
-    }
-  })
+const app = new Elysia({
+  prefix: '/api',
+})
+  .use(swagger())
+  .use(controllers)
+  .get('/', () => 'Hello, world!')
   .listen(3000);
 
 console.log(
