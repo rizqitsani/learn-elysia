@@ -20,7 +20,7 @@ const controllers = new Elysia()
     set.status = status;
     return {
       status,
-      message: "Success",
+      message: error.message,
       data: null,
     } satisfies ApiResponse;
   })
