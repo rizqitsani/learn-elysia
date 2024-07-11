@@ -23,6 +23,8 @@ export const tasks = pgTable("tasks", {
     .references(() => users.id),
 });
 
+export type NewTask = typeof tasks.$inferInsert
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   name: varchar("name", {

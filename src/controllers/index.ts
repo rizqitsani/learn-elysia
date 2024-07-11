@@ -1,15 +1,16 @@
-import Elysia from "elysia";
-import type { ApiResponse } from "../types/response";
-import { userController } from "./user-controller";
+import Elysia from 'elysia';
+import type { ApiResponse } from '../types/response';
+import { userController } from './user-controller';
+import { taskController } from './task-controller';
 
 const controllers = new Elysia()
   .onError(({ code, error, set }) => {
     let status: number;
     switch (code) {
-      case "NOT_FOUND":
+      case 'NOT_FOUND':
         status = 404;
         break;
-      case "VALIDATION":
+      case 'VALIDATION':
         status = 400;
         break;
       default:
@@ -27,10 +28,11 @@ const controllers = new Elysia()
   .onAfterHandle(({ response }) => {
     return {
       status: 200,
-      message: "Success",
-      data: response as ApiResponse["data"],
+      message: 'Success',
+      data: response as ApiResponse['data'],
     } satisfies ApiResponse;
   })
-  .use(userController);
+  .use(userController)
+  .use(taskController);
 
 export default controllers;
